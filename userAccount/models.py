@@ -1,3 +1,35 @@
 from django.db import models
 
 # Create your models here.
+
+
+class User(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Task(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Condition(models.Model):
+    STATUS = (
+        ('Current', 'Current'),
+        ('Deleted', 'Deleted'),
+        ('Completed', 'Completed'),
+    )
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    task = models.ForeignKey(Task, null=True, on_delete=models.SET_NULL)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    status = models.CharField(max_length=200, null=True, choices=STATUS)
+
+    def __str__(self):
+        return self.status
+
